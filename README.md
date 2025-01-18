@@ -1,6 +1,6 @@
 # System of Detection and Mitigation of False Data Injection in Industrial IoT
 
-Welcome to the GitHub repository for the System of Detection and Mitigation of False Data Injection in Industrial IoT (IIoT). This innovative project focuses on safeguarding industrial systems from False Data Injection (FDI) attacks using cutting-edge data science and AI techniques. This project aims to enhance security and data integrity in IIoT environments.
+Welcome to the GitHub repository of the Sigma Boys Team for the System of Detection and Mitigation of False Data Injection in Industrial IoT (IIoT). This innovative project focuses on safeguarding industrial systems from False Data Injection (FDI) attacks using cutting-edge data science and AI techniques. It aims to enhance security and ensure data integrity in IIoT environments.
 
 ---
 
