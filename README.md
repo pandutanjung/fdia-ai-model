@@ -4,7 +4,7 @@ Welcome to the GitHub repository of the Sigma Boys Team for the System of Detect
 
 ## Authors
 - Pandu Persada Tanjung
-- Muhammad Nibroos Abrar
+- Muhammad Nibroos Abrar (linkedin.com/in/mnibroosabrar)
 - Ghiffari Kenang Sagraha
 
 ## About Us
