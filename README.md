@@ -3,9 +3,11 @@
 Welcome to the GitHub repository of the Sigma Boys Team for the System of Detection and Mitigation of False Data Injection in Industrial IoT (IIoT). This innovative project focuses on safeguarding industrial systems from False Data Injection (FDI) attacks using cutting-edge data science and AI techniques. It aims to enhance security and ensure data integrity in IIoT environments.
 
 ## Authors
-- Pandu Persada Tanjung
-- Muhammad Nibroos Abrar (linkedin.com/in/mnibroosabrar)
-- Ghiffari Kenang Sagraha
+- [Pandu Persada Tanjung](linkedin.com/in/panduptanjung)
+- [Muhammad Nibroos Abrar](linkedin.com/in/mnibroosabrar)
+- [Ghiffari Kenang Sagraha](linkedin.com/in/sagrahagk)
+
+
 
 ## About Us
 The Sigma Boys Team is dedicated to developing innovative solutions for industrial challenges. Our expertise lies in leveraging advanced technologies, including data science, AI, and generative AI, to create secure and efficient industrial systems. This project is a testament to our commitment to enhancing industrial IoT environments through cutting-edge tools.
