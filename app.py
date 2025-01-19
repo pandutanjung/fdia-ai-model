@@ -12,9 +12,6 @@ st.set_page_config(layout="wide")
 project_id = os.getenv("project.id")
 project_region = os.getenv("region")
 
-# # Set environment variable dengan string JSON
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
-
 # Tulis kredensial dari st.secrets ke file sementara
 with open("google_credentials.json", "w") as f:
     f.write(st.secrets["GOOGLE_APPLICATION_CREDENTIALS"])
@@ -36,28 +33,55 @@ if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 if "input_text" not in st.session_state:
     st.session_state["input_text"] = ""
+    
+# Define a detailed base prompt
+BASE_PROMPT = """
+Anda adalah asisten AI yang sangat cerdas yang terintegrasi ke dalam platform bernama Sigma Boys.
+Platform ini mencakup dasbor untuk memantau dan mengurangi serangan False Data Injection Attacks (FDIA) dalam sistem Industrial Internet of Things (IIoT).
+Tugas utama Anda adalah:
 
-# Callback / Function to handle send
+1. Membantu pengguna dengan pertanyaan teknis tentang FDIA, IIoT, platform Vertex AI, Google Cloud, dan Platform Bliv, yang merupakan produk dari PT. BangunIndo.
+2. Menjelaskan fitur dan fungsi platform jika diminta.
+3. Menjelaskan grafik, chart, visualisasi data, rangkuman data, pelaporan dashboard, saran mitigasi, tindakan yang diperlukan untuk mitigasi FDIA, dan sebagainya yang berkaitan dengan FDIA dan Industrial Internet of Things (IIoT) jika diminta
+4. Menjawab pertanyaan umum yang tidak terkait dengan platform secara akurat dan sopan.
+5. Menggunakan bahasa yang fleksibel, bisa santai, bisa formal, bisa informal, dan bisa gaul juga tergantung pengguna
+6. Jangan dikit-dikit menjelaskan Sigma Boys kecuali jika memang diminta ataupun (berkaitan dan relevan)
+7. Jangan sebarkan hal-hal yang bersifat rahasia kepada pengguna, seperti google application crededential, akun, password, API, SDK, dan sebagainya
+Selalu sesuaikan nada dan kedalaman penjelasan berdasarkan pertanyaan pengguna. 
+Jika Anda tidak tahu jawabannya, sarankan langkah selanjutnya atau sumber daya eksternal yang mungkin berguna.
+"""
+
+# Function to generate a response
+def generate_response(user_input):
+    # Combine the base prompt with the user's input
+    prompt = BASE_PROMPT + "\nUser: " + user_input
+    try:
+        # Generate content using the Gemini model
+        response = model.generate_content(prompt, stream=True)
+        return "".join(res.text for res in response)
+    except Exception as e:
+        # Fallback response in case of an error
+        return "I'm sorry, I couldn't process your request. Please try again later."
+
+# Handle send button click
 def handle_send():
-    user_text = st.session_state["input_text"]  # Get text from the widget
+    user_text = st.session_state["input_text"]  # Get text from input widget
     if user_text.strip():
-        # Add to chat history
+        # Add user message to chat history
         st.session_state["chat_history"].append({"role": "user", "content": user_text})
-
-        # Call Gemini model for response
-        response = model.generate_content(user_text, stream=True)
-        ai_response = ""
-        for res in response:
-            ai_response += res.text
-
+        
+        # Generate AI response
+        ai_response = generate_response(user_text)
+        
+        # Add AI response to chat history
         st.session_state["chat_history"].append({"role": "ai", "content": ai_response})
-
+        
         # Clear input text
         st.session_state["input_text"] = ""
     else:
-        # If input is empty, show a warning
         st.warning("Input cannot be empty. Please type something!")
 
+# Handle clear button click
 def handle_clear():
     st.session_state["chat_history"] = []
     st.session_state["input_text"] = ""
@@ -202,7 +226,7 @@ with chat_container:
                 unsafe_allow_html=True,
             )
 
-# Input area
+# Input and action buttons
 input_container = st.container()
 with input_container:
     with st.form("chat_form", clear_on_submit=True):
