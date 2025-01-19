@@ -1,6 +1,7 @@
 import streamlit as st
 import os
-from google.cloud import aiplatform
+import json
+import vertexai
 from vertexai.preview.generative_models import GenerativeModel
 from dotenv import load_dotenv
 
@@ -11,8 +12,21 @@ st.set_page_config(layout="wide")
 project_id = os.getenv("project.id")
 project_region = os.getenv("region")
 
+# # Set environment variable dengan string JSON
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
+
+# Tulis kredensial dari st.secrets ke file sementara
+with open("google_credentials.json", "w") as f:
+    f.write(st.secrets["GOOGLE_APPLICATION_CREDENTIALS"])
+
+# Set environment variable ke file sementara
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
+
+# Tes apakah environment variable berhasil di-set
+print("GOOGLE_APPLICATION_CREDENTIALS:", os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+
 # Authentication
-aiplatform.init(project=project_id, location=project_region)
+vertexai.init(project="sparkdatathon-2025-student-5", location="us-central1")
 
 # Initialize the model
 model = GenerativeModel("gemini-1.0-pro")
@@ -46,6 +60,7 @@ def handle_send():
 
 def handle_clear():
     st.session_state["chat_history"] = []
+    st.session_state["input_text"] = ""
 
 # CSS (Copied from Project 1)
 st.markdown(
@@ -190,16 +205,14 @@ with chat_container:
 # Input area
 input_container = st.container()
 with input_container:
-    st.text_input(
-        label="",
-        placeholder="Type your message",
-        key="input_text",
-        on_change=handle_send,
-    )
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        if st.button("Send"):
-            pass
-    with col2:
-        if st.button("Clear"):
-            handle_clear()
+    with st.form("chat_form", clear_on_submit=True):
+        st.text_input(
+            label="",
+            placeholder="Type your message",
+            key="input_text"
+        )
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            st.form_submit_button("Send", on_click=handle_send)
+        with col2:
+            st.form_submit_button("Clear", on_click=handle_clear)
