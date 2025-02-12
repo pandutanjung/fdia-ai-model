@@ -1,8 +1,0 @@
-google-cloud-aiplatform
-vertexai
-streamlit
-pandas
-openai
-google-auth
-requests
-python-dotenv
