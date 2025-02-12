@@ -21,7 +21,3 @@ This project focuses on safeguarding industrial systems from False Data Injectio
 - **Visualization**: Provides a user-friendly dashboard for monitoring system performance and attack logs.
 - **Scalable and Flexible**: Easily integrates with diverse IIoT architectures and protocols.
 - **Chatbot Assistance**: Includes an AI-powered chatbot to assist users in troubleshooting, system configuration, and providing detailed attack insights.
-- **Real-time Detection**: Quickly identifies anomalies in IIoT data streams using advanced algorithms.
-- **Mitigation**: Automatically neutralizes threats by isolating compromised devices and correcting tampered data.
-- **Visualization**: Provides a user-friendly dashboard for monitoring system performance and attack logs.
-- **Scalable and Flexible**: Easily integrates with diverse IIoT architectures and protocols.
